@@ -5,7 +5,7 @@ image:
 platform:
   #- x86
   - x64
-  #- Any CPU
+  - Any CPU
 
 # set CURRENT_DATE_TIME=%date:~0,4%-%date:~5,2%-%date:~8,2%
 
