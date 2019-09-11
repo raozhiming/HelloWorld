@@ -22,8 +22,8 @@ deploy:
   file_glob: true
   file: test*.tar.gz
   skip_cleanup: true
-  on:
-    tags: false
+  # on:
+  #   tags: false
 
 # notifications:
 #  email:
