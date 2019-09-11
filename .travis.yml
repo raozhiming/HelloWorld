@@ -68,13 +68,13 @@ after_success:
 
   
 deploy:
-  provider: releases
+  provider: pages
   api_key: $GIT_TOKEN
   file_glob: true
   file: $BUILD_ENV*.tar.gz
   skip_cleanup: true
   on:
-    tags: true
+    tags: false
 
 # notifications:
 #  email:
