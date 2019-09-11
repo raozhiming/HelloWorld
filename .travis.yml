@@ -7,7 +7,7 @@ matrix:
 
 script:
   - echo "script"
-  - tar -czf test.tar.gz test
+  - tar -czf test-$(date +'%Y%m%d%H%M%S').tar.gz test
 
 before_deploy:
       # Set up git user name and tag this commit
