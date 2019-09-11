@@ -1,77 +1,26 @@
 language: c
 
-stages:
-  - name: after_success
-    if: env(RUN_TEST) IS present
-
-before_install:
-  - export BUILD_TYPE=Release
-  - export TEST=OK
-  - echo  "BUILD_TYPE" $BUILD_TYPE;
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      sudo apt-get install ruby-dev;
-      ulimit -c unlimited;
-      ulimit -c;
-    else
-      ulimit -c unlimited;
-      ulimit -c;
-      sudo sysctl kern.corefile=/cores/core;
-      easy_install six;
-    fi
-
-before_script:
-  - echo "script ***************"
-  - pwd
-  - export HOST_IP=`ifconfig eth0 | grep 'inet addr' | awk  -F"[:]" '{ print $2}'`
-  - echo $HOST_IP
-  - x=1
-  - while [[ $x -le 5 ]]; do
-      echo "Welcome $x times";
-      x=$(( $x + 1 ));
-    done
-
 matrix:
   include:
-    - os: osx
-      sudo: required
-      env: BUILD_ENV=darwin_x64 RUN_TEST=ON
-      if: BUILD_VER IS present
-
-    - sudo: required
-      env: BUILD_TYPE=Release BUILD_ENV=linux_x64
-      
     - sudo: required
       env: BUILD_TYPE=Release RUN_TEST=ON
-      
-    - os: windows
 
 script:
-  - gcc main.c
-  - ls -l
-  #- if [[ -f core* ]]; then
-  - if [[ "$RUN_TEST" != "" ]]; then
-      pwd;
-      ./a.out;
-    fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      sudo apt-get install gdb;
-      echo "crash";
-      echo bt | gdb ./a.out core;
-    else
-      echo bt | lldb -c /cores/core;
-  - echo bt | gdb ./a.out core
-  - return 1
+  - echo "script"
+  - tar -czf test.tar.gz test
 
-after_success:
-  - echo "after_success"
-  - ./a.out
+before_deploy:
+      # Set up git user name and tag this commit
+      - git config --local user.name "raozhiming"
+      - git config --local user.email "raozhiming@elastos.org"
+      - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+      - git tag $TRAVIS_TAG
 
-  
 deploy:
-  provider: pages
+  provider: releases
   api_key: $GIT_TOKEN
   file_glob: true
-  file: $BUILD_ENV*.tar.gz
+  file: test*.tar.gz
   skip_cleanup: true
   on:
     tags: false
