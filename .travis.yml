@@ -22,7 +22,9 @@ deploy:
   file_glob: true
   file: test*.tar.gz
   skip_cleanup: true
-  # on:
+  draft: true
+  on:
+    branch: deploy
   #   tags: false
 
 # notifications:
