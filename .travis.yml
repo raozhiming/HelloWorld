@@ -9,14 +9,14 @@ script:
   - echo "script"
   - tar -czf test-$(date +'%Y%m%d%H%M%S').tar.gz test
   - if [[ "$TRAVIS_EVENT_TYPE" == "cron" && "$TRAVIS_BRANCH" == "master" && "$DEPLOY" != ""]]; then
-    ret=.ci_scripts/checkCommit.sh;
-    if [[ "$ret" -ne 1 ]]; then
-      echo "no commit, do not upload apk!";
+      ret=.ci_scripts/checkCommit.sh;
+      if [[ "$ret" -ne 1 ]]; then
+        echo "no commit, do not upload apk!";
+        DEPLOY="";
+      fi;
+    else
       DEPLOY="";
-    fi;
-  else
-    DEPLOY="";
-  fi
+    fi
 
 before_deploy:
       # Set up git user name and tag this commit
