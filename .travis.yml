@@ -4,7 +4,7 @@ matrix:
   include:
     - sudo: required
       env: BUILD_TYPE=Release RUN_TEST=ON DEPLOY=TRUE
-      if: NOT tag IS present OR tag =~ /^(daily)/
+      if: NOT tag IS present OR tag !~ /^(daily)/
 
 script:
   - echo "script"
