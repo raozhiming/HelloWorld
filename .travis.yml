@@ -3,12 +3,20 @@ language: c
 matrix:
   include:
     - sudo: required
-      env: BUILD_TYPE=Release RUN_TEST=ON
+      env: BUILD_TYPE=Release RUN_TEST=ON DEPLOY=TRUE
 
 script:
   - echo "script"
   - tar -czf test-$(date +'%Y%m%d%H%M%S').tar.gz test
-  - export
+  - if [[ "$TRAVIS_EVENT_TYPE" == "cron" && "$TRAVIS_BRANCH" == "master" && "$DEPLOY" != ""]]; then
+    ret=.ci_scripts/checkCommit.sh;
+    if [[ "$ret" -ne 1 ]]; then
+      echo "no commit, do not upload apk!";
+      DEPLOY="";
+    fi;
+  else
+    DEPLOY="";
+  fi
 
 before_deploy:
       # Set up git user name and tag this commit
@@ -24,6 +32,7 @@ deploy:
   file: test*.tar.gz
   skip_cleanup: true
   prerelease: true
+  condition: $DEPLOY != ""
   on:
     branch: deploy
   #   tags: false
