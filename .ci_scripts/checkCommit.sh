@@ -3,6 +3,8 @@
 # skip commit with ci-skip or skip-ci
 # since one day ago
 
+echo "checkCommit-----"
+
 git submodule foreach '
 if [ "$path" = "ToolChains" ]; then
     return 0
