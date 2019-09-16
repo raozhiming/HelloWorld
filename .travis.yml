@@ -8,6 +8,8 @@ matrix:
 script:
   - echo "script"
   - tar -czf test-$(date +'%Y%m%d%H%M%S').tar.gz test
+  - ret=.ci_scripts/checkCommit.sh
+  - echo "ret is" $ret
   # - if [[ "$TRAVIS_EVENT_TYPE" == "cron" && "$TRAVIS_BRANCH" == "master" && "$DEPLOY" != "" ]]; then
   - if [[ "$TRAVIS_BRANCH" == "deploy" && "$DEPLOY" != "" ]]; then
       ret=.ci_scripts/checkCommit.sh;
