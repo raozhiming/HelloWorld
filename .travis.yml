@@ -12,7 +12,9 @@ script:
   - echo "ret is" $ret
   # - if [[ "$TRAVIS_EVENT_TYPE" == "cron" && "$TRAVIS_BRANCH" == "master" && "$DEPLOY" != "" ]]; then
   - if [[ "$TRAVIS_BRANCH" == "deploy" && "$DEPLOY" != "" ]]; then
-      ret=.ci_scripts/checkCommit.sh;
+      .ci_scripts/checkCommit.sh;
+      ret=$?;
+      echo "ret:"$ret;
       if [[ "$ret" -ne 1 ]]; then
         echo "no commit, do not upload apk!";
         DEPLOY="";
