@@ -8,6 +8,7 @@ matrix:
 script:
   - echo "script"
   - tar -czf test-$(date +'%Y%m%d%H%M%S').tar.gz test
+  - export
 
 before_deploy:
       # Set up git user name and tag this commit
@@ -27,9 +28,3 @@ deploy:
     branch: deploy
   #   tags: false
 
-# notifications:
-#  email:
-#    recipients:
-#    - raozhiming@msn.com
-#     on_success: always
-#     on_failure: always
