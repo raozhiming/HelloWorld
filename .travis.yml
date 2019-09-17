@@ -40,8 +40,8 @@ deploy:
   file: test*.tar.gz
   skip_cleanup: true
   prerelease: true
-  condition: $DEPLOY != ""
   on:
+    condition: $DEPLOY != ""
     branch: deploy
   #   tags: false
 
