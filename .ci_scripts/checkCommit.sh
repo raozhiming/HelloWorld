@@ -7,10 +7,10 @@ HOST="$(uname -s)"
 
 case "${HOST}" in
     "Darwin")
-        DATE_ARG="-r"
+        DATE_ARG="-r "
         ;;
     "Linux")
-        DATE_ARG="-d"
+        DATE_ARG="-d @"
         ;;
     *)
         echo "Error: Unsupported platform"
@@ -27,7 +27,7 @@ fi
 
 
 # date -d @$TAG_DATE
-LastestTagDate=`date $DATE_ARG $TAG_DATE`
+LastestTagDate=`date $DATE_ARG$TAG_DATE`
 echo "LastestTag Date:"$LastestTagDate
 
 git submodule foreach "
