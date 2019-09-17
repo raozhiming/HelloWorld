@@ -9,8 +9,8 @@ matrix:
 script:
   - echo "script"
   - tar -czf test-$(date +'%Y%m%d%H%M%S').tar.gz test
-  - ret=`.ci_scripts/checkCommit.sh`
-  - echo "ret is" $ret
+  # - ret=`.ci_scripts/checkCommit.sh`
+  # - echo "ret is" $ret
   # - if [[ "$TRAVIS_EVENT_TYPE" == "cron" && "$TRAVIS_BRANCH" == "master" && "$DEPLOY" != "" ]]; then
   - if [[ "$TRAVIS_BRANCH" == "deploy" && "$DEPLOY" != "" ]]; then
       .ci_scripts/checkCommit.sh;
@@ -23,9 +23,11 @@ script:
     else
       DEPLOY="";
     fi
+  - export
 
 before_deploy:
       # Set up git user name and tag this commit
+      # - export
       - git config --local user.name "raozhiming"
       - git config --local user.email "raozhiming@elastos.org"
       - export TRAVIS_TAG="daily"-$(date +'%Y%m%d%H')-$(git log --format=%h -1)
