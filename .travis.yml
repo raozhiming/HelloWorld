@@ -1,41 +1,24 @@
 language: c
-
 matrix:
   include:
-    - sudo: required
-      env: BUILD_TYPE=Release RUN_TEST=ON DEPLOY=TRUE
-      if: NOT tag IS present OR tag !~ /^(daily)/
-
+  - sudo: required
+    env: BUILD_TYPE=Release RUN_TEST=ON DEPLOY=TRUE
+    if: NOT tag IS present OR tag !~ /^(daily)/
 script:
-  - echo "script"
-  - tar -czf test-$(date +'%Y%m%d%H%M%S').tar.gz test
-  # - ret=`.ci_scripts/checkCommit.sh`
-  # - echo "ret is" $ret
-  # - if [[ "$TRAVIS_EVENT_TYPE" == "cron" && "$TRAVIS_BRANCH" == "master" && "$DEPLOY" != "" ]]; then
-  - if [[ "$TRAVIS_BRANCH" == "deploy" && "$DEPLOY" != "" ]]; then
-      .ci_scripts/checkCommit.sh;
-      ret=$?;
-      echo "ret:"$ret;
-      if [[ "$ret" -ne 1 ]]; then
-        echo "no commit, do not upload apk!";
-        DEPLOY="";
-      fi;
-    else
-      DEPLOY="";
-    fi
-  - export
-
+- echo "script"
+- tar -czf test-$(date +'%Y%m%d%H%M%S').tar.gz test
+- if [[ "$TRAVIS_BRANCH" == "deploy" && "$DEPLOY" != "" ]]; then .ci_scripts/checkCommit.sh;
+  ret=$?; echo "ret:"$ret; if [[ "$ret" -ne 1 ]]; then echo "no commit, do not upload
+  apk!"; DEPLOY=""; fi; else DEPLOY=""; fi
+- export
 before_deploy:
-      # Set up git user name and tag this commit
-      # - export
-      - git config --local user.name "raozhiming"
-      - git config --local user.email "raozhiming@elastos.org"
-      - export TRAVIS_TAG="daily"-$(date +'%Y%m%d%H')-$(git log --format=%h -1)
-      - git tag $TRAVIS_TAG
-
+- git config --local user.name "raozhiming"
+- git config --local user.email "raozhiming@elastos.org"
+- export TRAVIS_TAG="daily"-$(date +'%Y%m%d%H')-$(git log --format=%h -1)
+- git tag $TRAVIS_TAG
 deploy:
   provider: releases
-  api_key: $GIT_TOKEN
+  api_key: "$GIT_TOKEN"
   file_glob: true
   file: test*.tar.gz
   skip_cleanup: true
@@ -43,5 +26,7 @@ deploy:
   on:
     condition: $DEPLOY != ""
     branch: deploy
-  #   tags: false
-
+before_install:
+- openssl aes-256-cbc -K $encrypted_8fcfd2c92c46_key -iv $encrypted_8fcfd2c92c46_iv
+  -in trinity.jks.enc -out trinity.jks -d
+- ls -l
