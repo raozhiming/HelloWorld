@@ -4,73 +4,25 @@ image:
 
 platform:
   #- x86
-  - x64
+  # - x64
   - Any CPU
 
-# set CURRENT_DATE_TIME=%date:~0,4%-%date:~5,2%-%date:~8,2%
+environment:
+  nodejs_version: "10"
+
+# Install scripts. (runs after repo cloning)
+install:
+  # Get the latest stable version of Node.js or io.js
+  - ps: Install-Product node $env:nodejs_version
+  # install modules
+  - npm install
+
+# Post-install test scripts.
+test_script:
+  # Output useful info for debugging.
+  - node --version
+  - npm --version
 
 build_script:
   - cmd: echo "build_script"
-
-for:
--
-  matrix:
-    only:
-      #- platform: x86
-      - platform: x64
-      #- platform: Any CPU
-
-  test_script:
-    - cmd: echo "test_script"
-    - cmd: set
-    - cmd: set packagename=%APPVEYOR_REPO_TAG_NAME%-windows-x64-%date:~10,4%%date:~7,2%%date:~4,2%.7z
-    - cmd: 7z a -t7z %APPVEYOR_REPO_TAG_NAME%Test-windows-x64-%date:~10,4%%date:~7,2%%date:~4,2%.7z main.c
-    - cmd: cd test
-    - ps: |
-        if ($env:APPVEYOR_REPO_TAG -eq "true")
-        {
-            echo "APPVEYOR_REPO_TAG is true";
-        }
-        else
-        {
-            echo "APPVEYOR_REPO_TAG is false";
-        }
-
-    - ps: |
-        if ($env:APPVEYOR_REPO_TAG -eq "false")
-        {
-            echo "APPVEYOR_REPO_TAG is false ------";
-            echo $env:APPVEYOR_REPO_TAG;
-            echo $env:packagename;
-            echo "-----";
-            echo $APPVEYOR_REPO_TAG;
-            echo $packagename;
-            echo %packagename%;
-        }
-    # - ps: |
-    #   if ($APPVEYOR_REPO_TAG == false)
-    #   {
-    #     echo "APPVEYOR_REPO_TAG is true"
-    #   }
-
-before_deploy:
-  #- cmd: echo "before_deploy"
-  - set
-  - cmd: ls
-  - cmd: cd %APPVEYOR_BUILD_FOLDER%
-
-artifacts:
-  - path: '*.7z'
-
-deploy:
-  provider: GitHub
-  artifacts:
-  auth_token:
-    secure: laxpzpLvoNtm2QlSyzKsLp25Jucp7BvdQpF25/p7yQU4B4zOCWQQnF73Wb71+leD
-  draft: false
-  prerelease: false
-  on:
-    # branch: master
-    platform: x64
-    APPVEYOR_REPO_TAG: false
 
