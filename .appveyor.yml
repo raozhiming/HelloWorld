@@ -54,8 +54,7 @@ for:
     #   }
 
 before_deploy:
-  #- cmd: echo "before_deploy"
-  - set
+  - cmd: echo "before_deploy"
   - cmd: ls
   - cmd: cd %APPVEYOR_BUILD_FOLDER%
 
