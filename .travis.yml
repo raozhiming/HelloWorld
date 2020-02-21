@@ -6,6 +6,7 @@ stages:
 
 before_install:
   - brew -v
+  - brew bundle -h
   - brew update
   - brew cask uninstall java
   - wget -q https://dl.google.com/android/repository/sdk-tools-darwin-4333796.zip
