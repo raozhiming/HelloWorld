@@ -6,8 +6,9 @@ stages:
 
 before_install:
   - brew -v
-  - brew bundle -h
   - brew update
+  - brew -v
+  - brew bundle -h
   - brew cask uninstall java
   - wget -q https://dl.google.com/android/repository/sdk-tools-darwin-4333796.zip
   - sudo unzip -q sdk-tools-darwin-4333796.zip -d $TRAVIS_HOME/android-sdk/
