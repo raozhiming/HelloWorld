@@ -58,8 +58,9 @@ matrix:
           taps: homebrew/cask-versions
           casks: adoptopenjdk8
 
-    # - sudo: required
-    #   env: BUILD_TYPE=Release BUILD_ENV=linux_x64
+    - sudo: required
+      env: BUILD_TYPE=Release BUILD_ENV=linux_x64
+      if: env(TRAVIS_EVENT_TYPE) IS present
 
     # - sudo: required
     #   env: BUILD_TYPE=Release RUN_TEST=ON
