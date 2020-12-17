@@ -20,8 +20,20 @@ for:
       - platform: x64
       #- platform: Any CPU
 
+
+  environment:
+    PYTHON: "C:\\Python37"
+
+  init:
+    - "echo %PYTHON%"
+
+  install:
+    - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+
   test_script:
-    - cmd: echo "test_script"
+    - cmd: python --version
+    - cmd: dir %PYTHON%
+    - cmd: python3 --version
     - cmd: set
     - cmd: set packagename=%APPVEYOR_REPO_TAG_NAME%-windows-x64-%date:~10,4%%date:~7,2%%date:~4,2%.7z
     - cmd: 7z a -t7z %APPVEYOR_REPO_TAG_NAME%Test-windows-x64-%date:~10,4%%date:~7,2%%date:~4,2%.7z main.c
