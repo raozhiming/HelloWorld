@@ -1,88 +1,115 @@
+image: Visual Studio 2017
 
-image:
-  - Visual Studio 2017
+environment:
+  ANDROID_HOME: "C:\\ProgramData\\Microsoft\\AndroidSDK\\25"
+  nodejs_version: "10"
+  PYTHON: "C:\\Python37"
 
-platform:
-  #- x86
-  - x64
-  - Any CPU
+init:
+  - "echo %PYTHON%"
 
-# set CURRENT_DATE_TIME=%date:~0,4%-%date:~5,2%-%date:~8,2%
+install:
+  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+  - ps: Install-Product node $env:nodejs_version x64
+  - echo y| "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t tools
+  - echo y| "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t platform-tools
+  - echo y| "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t build-tools-27.0.0
+  - echo y| "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t build-tools-28.0.3
+  - echo y| "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t android-27
+  - echo y| "%ANDROID_HOME%\tools\bin\sdkmanager.bat" "cmake;3.10.2.4988404"
+  - echo y| "%ANDROID_HOME%\tools\bin\sdkmanager.bat" "ndk-bundle"
+  - git submodule update --init --recursive
 
 build_script:
   - cmd: echo "build_script"
-
-for:
--
-  matrix:
-    only:
-      #- platform: x86
-      - platform: x64
-      #- platform: Any CPU
+  - cmd: ls -l C:\ProgramData\Microsoft\AndroidSDK
+  - ps: (new-object net.webclient).DownloadFile('https://services.gradle.org/distributions/gradle-5.4.1-bin.zip', 'C:\projects\gradle-5.4.1-bin.zip')
+  - cmd: unzip -q C:\projects\gradle-5.4.1-bin.zip -d  C:\projects\
+  - cmd: set Path=C:\projects\gradle-5.4.1\bin;%Path%
+  - cmd: npm install -g cordova ionic
 
 
-  environment:
-    PYTHON: "C:\\Python37"
+# platform:
+#   #- x86
+#   - x64
+#   - Any CPU
 
-  init:
-    - "echo %PYTHON%"
+# # set CURRENT_DATE_TIME=%date:~0,4%-%date:~5,2%-%date:~8,2%
 
-  install:
-    - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+# build_script:
+#   - cmd: echo "build_script"
 
-  test_script:
-    - cmd: python --version
-    - cmd: dir %PYTHON%
-    - cmd: python3 --version
-    - cmd: set
-    - cmd: set packagename=%APPVEYOR_REPO_TAG_NAME%-windows-x64-%date:~10,4%%date:~7,2%%date:~4,2%.7z
-    - cmd: 7z a -t7z %APPVEYOR_REPO_TAG_NAME%Test-windows-x64-%date:~10,4%%date:~7,2%%date:~4,2%.7z main.c
-    - cmd: cd test
-    - ps: |
-        if ($env:APPVEYOR_REPO_TAG -eq "true")
-        {
-            echo "APPVEYOR_REPO_TAG is true";
-        }
-        else
-        {
-            echo "APPVEYOR_REPO_TAG is false";
-        }
+# for:
+# -
+#   matrix:
+#     only:
+#       #- platform: x86
+#       - platform: x64
+#       #- platform: Any CPU
 
-    - ps: |
-        if ($env:APPVEYOR_REPO_TAG -eq "false")
-        {
-            echo "APPVEYOR_REPO_TAG is false ------";
-            echo $env:APPVEYOR_REPO_TAG;
-            echo $env:packagename;
-            echo "-----";
-            echo $APPVEYOR_REPO_TAG;
-            echo $packagename;
-            echo %packagename%;
-        }
-    # - ps: |
-    #   if ($APPVEYOR_REPO_TAG == false)
-    #   {
-    #     echo "APPVEYOR_REPO_TAG is true"
-    #   }
 
-before_deploy:
-  #- cmd: echo "before_deploy"
-  - set
-  - cmd: ls
-  - cmd: cd %APPVEYOR_BUILD_FOLDER%
+#   environment:
+#     PYTHON: "C:\\Python37"
 
-artifacts:
-  - path: '*.7z'
+#   init:
+#     - "echo %PYTHON%"
 
-deploy:
-  provider: GitHub
-  artifacts:
-  auth_token:
-    secure: laxpzpLvoNtm2QlSyzKsLp25Jucp7BvdQpF25/p7yQU4B4zOCWQQnF73Wb71+leD
-  draft: false
-  prerelease: false
-  on:
-    # branch: master
-    platform: x64
-    APPVEYOR_REPO_TAG: false
+#   install:
+#     - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+
+#   test_script:
+#     - cmd: python --version
+#     - cmd: dir %PYTHON%
+#     - cmd: python3 --version
+#     - cmd: set
+#     - cmd: set packagename=%APPVEYOR_REPO_TAG_NAME%-windows-x64-%date:~10,4%%date:~7,2%%date:~4,2%.7z
+#     - cmd: 7z a -t7z %APPVEYOR_REPO_TAG_NAME%Test-windows-x64-%date:~10,4%%date:~7,2%%date:~4,2%.7z main.c
+#     - cmd: cd test
+#     - ps: |
+#         if ($env:APPVEYOR_REPO_TAG -eq "true")
+#         {
+#             echo "APPVEYOR_REPO_TAG is true";
+#         }
+#         else
+#         {
+#             echo "APPVEYOR_REPO_TAG is false";
+#         }
+
+#     - ps: |
+#         if ($env:APPVEYOR_REPO_TAG -eq "false")
+#         {
+#             echo "APPVEYOR_REPO_TAG is false ------";
+#             echo $env:APPVEYOR_REPO_TAG;
+#             echo $env:packagename;
+#             echo "-----";
+#             echo $APPVEYOR_REPO_TAG;
+#             echo $packagename;
+#             echo %packagename%;
+#         }
+#     # - ps: |
+#     #   if ($APPVEYOR_REPO_TAG == false)
+#     #   {
+#     #     echo "APPVEYOR_REPO_TAG is true"
+#     #   }
+
+# before_deploy:
+#   #- cmd: echo "before_deploy"
+#   - set
+#   - cmd: ls
+#   - cmd: cd %APPVEYOR_BUILD_FOLDER%
+
+# artifacts:
+#   - path: '*.7z'
+
+# deploy:
+#   provider: GitHub
+#   artifacts:
+#   auth_token:
+#     secure: laxpzpLvoNtm2QlSyzKsLp25Jucp7BvdQpF25/p7yQU4B4zOCWQQnF73Wb71+leD
+#   draft: false
+#   prerelease: false
+#   on:
+#     # branch: master
+#     platform: x64
+#     APPVEYOR_REPO_TAG: false
 
