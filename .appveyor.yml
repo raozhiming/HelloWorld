@@ -10,23 +10,23 @@ init:
 
 install:
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
-  - ps: Install-Product node $env:nodejs_version x64
-  - echo y| "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t tools
-  - echo y| "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t platform-tools
-  - echo y| "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t build-tools-27.0.0
-  - echo y| "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t build-tools-28.0.3
-  - echo y| "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t android-27
-  - echo y| "%ANDROID_HOME%\tools\bin\sdkmanager.bat" "cmake;3.10.2.4988404"
-  - echo y| "%ANDROID_HOME%\tools\bin\sdkmanager.bat" "ndk-bundle"
-  - git submodule update --init --recursive
+  # - ps: Install-Product node $env:nodejs_version x64
+  # - echo y| "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t tools
+  # - echo y| "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t platform-tools
+  # - echo y| "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t build-tools-27.0.0
+  # - echo y| "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t build-tools-28.0.3
+  # - echo y| "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t android-27
+  # - echo y| "%ANDROID_HOME%\tools\bin\sdkmanager.bat" "cmake;3.10.2.4988404"
+  # - echo y| "%ANDROID_HOME%\tools\bin\sdkmanager.bat" "ndk-bundle"
+  # - git submodule update --init --recursive
 
 build_script:
   - cmd: echo "build_script"
-  - cmd: ls -l C:\ProgramData\Microsoft\AndroidSDK
-  - ps: (new-object net.webclient).DownloadFile('https://services.gradle.org/distributions/gradle-5.4.1-bin.zip', 'C:\projects\gradle-5.4.1-bin.zip')
-  - cmd: unzip -q C:\projects\gradle-5.4.1-bin.zip -d  C:\projects\
-  - cmd: set Path=C:\projects\gradle-5.4.1\bin;%Path%
-  - cmd: npm install -g cordova ionic
+  # - cmd: ls -l C:\ProgramData\Microsoft\AndroidSDK
+  # - ps: (new-object net.webclient).DownloadFile('https://services.gradle.org/distributions/gradle-5.4.1-bin.zip', 'C:\projects\gradle-5.4.1-bin.zip')
+  # - cmd: unzip -q C:\projects\gradle-5.4.1-bin.zip -d  C:\projects\
+  # - cmd: set Path=C:\projects\gradle-5.4.1\bin;%Path%
+  # - cmd: npm install -g cordova ionic
 
 
 # platform:
