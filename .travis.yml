@@ -36,6 +36,7 @@ matrix:
   # - pip3 install --upgrade pip
 
 install:
+  - python3 -m ensurepip --upgrade
   - python --version
   - python3 --version
   # - pip3 install --upgrade pip
