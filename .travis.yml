@@ -43,6 +43,7 @@ install:
   - sudo rm /usr/bin/python
   - sudo ln -s /usr/bin/python3.7 /usr/bin/python
   - python --version
+  - pip --version
 
 script:
   - echo "script"
