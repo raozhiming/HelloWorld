@@ -1,106 +1,14 @@
-language: c
+language: python
 
-stages:
-  - name: after_success
-    if: env(RUN_TEST) IS present
-
-before_install:
-  - brew -v
-  - brew bundle -h
-  - brew update
-  - brew -v
-  - brew cask uninstall java
-  - wget -q https://dl.google.com/android/repository/sdk-tools-darwin-4333796.zip
-  - sudo unzip -q sdk-tools-darwin-4333796.zip -d $TRAVIS_HOME/android-sdk/
-  - export ANDROID_HOME=$TRAVIS_HOME/android-sdk
-  - sudo chmod -R 777 $ANDROID_HOME
-  - wget -q https://dl.google.com/android/repository/android-ndk-${NDK}-darwin-x86_64.zip
-  - sudo unzip -q android-ndk-${NDK}-darwin-x86_64.zip -d $TRAVIS_HOME/
-  - export ANDROID_NDK_HOME=$TRAVIS_HOME/android-ndk-${NDK}
-  - export PATH=$ANDROID_HOME/tools/bin:$ANDROID_HOME/tools:$ANDROID_HOME/build-tools:$PATH
-  - java -version
-  - echo y | sudo sdkmanager "build-tools;28.0.3"
-  - export BUILD_TYPE=Release
-  - export TEST=OK
-  - echo  "BUILD_TYPE" $BUILD_TYPE;
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      sudo apt-get install ruby-dev;
-      ulimit -c unlimited;
-      ulimit -c;
-    else
-      ulimit -c unlimited;
-      ulimit -c;
-      sudo sysctl kern.corefile=/cores/core;
-      easy_install six;
-    fi
-
-before_script:
-  - echo "script ***************"
-  - pwd
-  - export HOST_IP=`ifconfig eth0 | grep 'inet addr' | awk  -F"[:]" '{ print $2}'`
-  - echo $HOST_IP
-  - x=1
-  - while [[ $x -le 5 ]]; do
-      echo "Welcome $x times";
-      x=$(( $x + 1 ));
-    done
+cache:
+  directories:
+  - "$HOME/.cache/pip"
+  - "$HOME/.pyenv"
 
 matrix:
   include:
-    - os: osx
-      sudo: required
-      env: BUILD_ENV=darwin_x64 RUN_TEST=ON NDK=r18b
-      if: BUILD_VER IS present
-      osx_image: xcode11.2
-      addons:
-        homebrew:
-          update: true
-          taps: homebrew/cask-versions
-          casks: adoptopenjdk8
+  - python: 2.7
+  - python: 3.7
 
-    - sudo: required
-      env: BUILD_TYPE=Release BUILD_ENV=linux_x64
-      if: type != cron
-
-    # - sudo: required
-    #   env: BUILD_TYPE=Release RUN_TEST=ON
-
-    # - os: windows
-
-script:
-  - gcc main.c
-  - ls -l
-  #- if [[ -f core* ]]; then
-  - if [[ "$RUN_TEST" != "" ]]; then
-      pwd;
-      ./a.out;
-    fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      sudo apt-get install gdb;
-      echo "crash";
-      echo bt | gdb ./a.out core;
-    else
-      echo bt | lldb -c /cores/core;
-  - echo bt | gdb ./a.out core
-  - return 1
-
-after_success:
-  - echo "after_success"
-  - ./a.out
-
-
-# deploy:
-#   provider: pages
-#   api_key: $GIT_TOKEN
-#   file_glob: true
-#   file: $BUILD_ENV*.tar.gz
-#   skip_cleanup: true
-#   on:
-#     tags: false
-
-# notifications:
-#  email:
-#    recipients:
-#    - raozhiming@msn.com
-#     on_success: always
-#     on_failure: always
+install:
+  - python --version
