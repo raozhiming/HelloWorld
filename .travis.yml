@@ -31,8 +31,8 @@ matrix:
 before_install:
   - python --version
   - python3 --version
-  - pyenv install 3.7
-  - pyenv global 3.7
+  - pyenv install 3.7-dev
+  - pyenv global 3.7-dev
 #   - sudo apt-get update
 #   - sudo apt-get install python3
 
