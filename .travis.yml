@@ -28,14 +28,15 @@ matrix:
     #     packages:
     #       - python3.7
 
-# before_install:
+before_install:
+  - pyenv global 3.6
 #   - sudo apt-get update
 #   - sudo apt-get install python3
 
 install:
   - sudo apt-get -y install python3-pip
   - pip3 install --user virtualenv
-  - pip3 install --upgrade pip
+  # - pip3 install --upgrade pip
   - python --version
   - python3 --version
   - ls -l /opt/py*
