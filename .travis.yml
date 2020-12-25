@@ -9,6 +9,16 @@ matrix:
     language: python
     python: 3.7
     env: pythonv=3.7
+    android:
+      components:
+        - tools
+        - platform-tools
+        - build-tools-28.0.3
+        - android-28
+      licenses:
+        - 'android-sdk-preview-license-.+'
+        - 'android-sdk-license-.+'
+        - 'google-gdk-license-.+'
 
 
 install:
