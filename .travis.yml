@@ -6,9 +6,9 @@ sudo: true
 
 matrix:
   include:
-  - env: pythonv=2.7
-    install:
-      - pip -V
+  # - env: pythonv=2.7
+  #   install:
+  #     - pip -V
   - language: android
     dist: trusty
     python: 3.7
@@ -46,9 +46,12 @@ install:
   - ls -l /usr/bin/p*
   - sudo rm /usr/bin/python
   - sudo ln -s /usr/bin/python3.7 /usr/bin/python
+  - sudo rm /usr/bin/python3
+  - sudo ln -s /usr/bin/python3.7 /usr/bin/python3
   - python --version
   # - python3 -m ensurepip --upgrade
   - pip3 -V
+  - pip -V
 
 script:
   - echo "script"
