@@ -1,5 +1,5 @@
-language: python
-python: 3.7
+# language: python
+# python: 3.7
 
 
 matrix:
@@ -32,7 +32,7 @@ matrix:
 install:
   - python --version
   - python3 --version
-  - ls /opt/python/
+  - ls -l /opt/py*
   - ls -l /usr/bin/p*
 
 script:
