@@ -38,10 +38,10 @@ install:
   - python --version
   - python3 --version
   # - pip3 install --upgrade pip
-  - ls -l /opt/py*
+  - ls -l /opt/python/
   - ls -l /usr/bin/p*
   - sudo rm /usr/bin/python
-  - ln -s /usr/bin/python3.7 /usr/bin/python
+  - sudo ln -s /usr/bin/python3.7 /usr/bin/python
   - python --version
 
 script:
