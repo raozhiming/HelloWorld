@@ -6,7 +6,9 @@ matrix:
   include:
   - env: pythonv=2.7
   - env: pythonv=3.7
-    language: python
+    language:
+      - python
+      - android
     python: 3.7
 
 install:
