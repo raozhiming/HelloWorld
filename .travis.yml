@@ -1,10 +1,6 @@
 language: node_js
 python: 3.7
 
-cache:
-  directories:
-  - "$HOME/.cache/pip"
-  - "$HOME/.pyenv"
 
 matrix:
   include:
@@ -15,3 +11,12 @@ matrix:
 
 install:
   - python --version
+
+script:
+  - echo "script"
+
+cache:
+  directories:
+  - "$HOME/.cache/pip"
+  - "$HOME/.pyenv"
+
