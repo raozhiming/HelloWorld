@@ -50,7 +50,7 @@ install:
   - sudo ln -s /usr/bin/python3.7 /usr/bin/python3
   - python --version
   # - python3 -m ensurepip --upgrade
-  - pip3 -V
+  # - pip3 -V
   - pip -V
 
 script:
