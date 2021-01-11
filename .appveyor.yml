@@ -11,6 +11,9 @@ platform:
 
 build_script:
   - cmd: echo "build_script"
+  - cmd: ls -l C:\ProgramData\Microsoft\AndroidSDK
+  - cmd: ls -l C:\ProgramData\Microsoft\AndroidSDK\25
+  - cmd: ls -l C:\ProgramData\Microsoft\AndroidSDK\25\ndk
 
 for:
 -
@@ -31,34 +34,34 @@ for:
     - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
 
   test_script:
-    - cmd: python --version
-    - cmd: dir %PYTHON%
-    - cmd: python3 --version
-    - cmd: set
-    - cmd: set packagename=%APPVEYOR_REPO_TAG_NAME%-windows-x64-%date:~10,4%%date:~7,2%%date:~4,2%.7z
-    - cmd: 7z a -t7z %APPVEYOR_REPO_TAG_NAME%Test-windows-x64-%date:~10,4%%date:~7,2%%date:~4,2%.7z main.c
-    - cmd: cd test
-    - ps: |
-        if ($env:APPVEYOR_REPO_TAG -eq "true")
-        {
-            echo "APPVEYOR_REPO_TAG is true";
-        }
-        else
-        {
-            echo "APPVEYOR_REPO_TAG is false";
-        }
+    # - cmd: python --version
+    # - cmd: dir %PYTHON%
+    # - cmd: python3 --version
+    # - cmd: set
+    # - cmd: set packagename=%APPVEYOR_REPO_TAG_NAME%-windows-x64-%date:~10,4%%date:~7,2%%date:~4,2%.7z
+    # - cmd: 7z a -t7z %APPVEYOR_REPO_TAG_NAME%Test-windows-x64-%date:~10,4%%date:~7,2%%date:~4,2%.7z main.c
+    # - cmd: cd test
+    # - ps: |
+    #     if ($env:APPVEYOR_REPO_TAG -eq "true")
+    #     {
+    #         echo "APPVEYOR_REPO_TAG is true";
+    #     }
+    #     else
+    #     {
+    #         echo "APPVEYOR_REPO_TAG is false";
+    #     }
 
-    - ps: |
-        if ($env:APPVEYOR_REPO_TAG -eq "false")
-        {
-            echo "APPVEYOR_REPO_TAG is false ------";
-            echo $env:APPVEYOR_REPO_TAG;
-            echo $env:packagename;
-            echo "-----";
-            echo $APPVEYOR_REPO_TAG;
-            echo $packagename;
-            echo %packagename%;
-        }
+    # - ps: |
+    #     if ($env:APPVEYOR_REPO_TAG -eq "false")
+    #     {
+    #         echo "APPVEYOR_REPO_TAG is false ------";
+    #         echo $env:APPVEYOR_REPO_TAG;
+    #         echo $env:packagename;
+    #         echo "-----";
+    #         echo $APPVEYOR_REPO_TAG;
+    #         echo $packagename;
+    #         echo %packagename%;
+    #     }
     # - ps: |
     #   if ($APPVEYOR_REPO_TAG == false)
     #   {
