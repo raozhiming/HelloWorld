@@ -22,7 +22,9 @@ install:
 
 build_script:
   - cmd: echo "build_script"
-  # - cmd: ls -l C:\ProgramData\Microsoft\AndroidSDK
+  - cmd: ls -l C:\ProgramData\Microsoft\AndroidSDK
+  - cmd: ls -l C:\ProgramData\Microsoft\AndroidSDK\25
+  - cmd: ls -l C:\ProgramData\Microsoft\AndroidSDK\25\ndk
   # - ps: (new-object net.webclient).DownloadFile('https://services.gradle.org/distributions/gradle-5.4.1-bin.zip', 'C:\projects\gradle-5.4.1-bin.zip')
   # - cmd: unzip -q C:\projects\gradle-5.4.1-bin.zip -d  C:\projects\
   # - cmd: set Path=C:\projects\gradle-5.4.1\bin;%Path%
