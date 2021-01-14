@@ -5,9 +5,14 @@ image:
 platform:
   #- x86
   - x64
-  - Any CPU
+  # - Any CPU
 
 # set CURRENT_DATE_TIME=%date:~0,4%-%date:~5,2%-%date:~8,2%
+
+environment:
+  ANDROID_HOME: "C:\\ProgramData\\Microsoft\\AndroidSDK\\25"
+  nodejs_version: "10"
+  PYTHON: "C:\\Python37"
 
 install:
   - echo y| "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t tools
@@ -22,27 +27,27 @@ build_script:
   - cmd: echo "build_script"
   - cmd: ls -l C:\ProgramData\Microsoft\AndroidSDK
   - cmd: ls -l C:\ProgramData\Microsoft\AndroidSDK\25
-  - cmd: ls -l C:\ProgramData\Microsoft\AndroidSDK\25\ndk
+  # - cmd: ls -l C:\ProgramData\Microsoft\AndroidSDK\25\ndk
 
-for:
--
-  matrix:
-    only:
-      #- platform: x86
-      - platform: x64
-      #- platform: Any CPU
+# for:
+# -
+#   matrix:
+#     only:
+#       #- platform: x86
+#       - platform: x64
+#       #- platform: Any CPU
 
 
-  environment:
-    PYTHON: "C:\\Python37"
+#   environment:
+#     PYTHON: "C:\\Python37"
 
-  init:
-    - "echo %PYTHON%"
+#   init:
+#     - "echo %PYTHON%"
 
-  install:
-    - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+#   install:
+#     - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
 
-  test_script:
+#   test_script:
     # - cmd: python --version
     # - cmd: dir %PYTHON%
     # - cmd: python3 --version
