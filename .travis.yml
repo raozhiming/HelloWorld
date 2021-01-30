@@ -52,6 +52,7 @@ install:
   # - python3 -m ensurepip --upgrade
   # - pip3 -V
   - pip -V
+  - export
 
 script:
   - echo "script"
