@@ -6,13 +6,13 @@ sudo: true
 
 matrix:
   include:
-  # - env: pythonv=2.7
-  #   install:
-  #     - pip -V
+  - env: pythonv=2.7
+    if: $(date +%w) = 1
   - language: android
     dist: trusty
     python: 3.7
     env: pythonv=3.7
+    if: $(date +%w) = 2
 
 before_install:
   # - sudo apt-get update
