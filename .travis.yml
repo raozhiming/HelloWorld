@@ -16,7 +16,7 @@ matrix:
     dist: trusty
     python: 3.7
     env: pythonv=3.7
-    if: `$(date +%w))` = 1
+    if: (WEEK=$(date +%w))) = 1
 
 
 before_install:
