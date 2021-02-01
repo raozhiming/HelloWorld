@@ -33,7 +33,7 @@ script:
   #   fi
   - export WEEK_DAY=$(date +%w)
   - if [[ $WEEK_DAY -eq 1 || $WEEK_DAY -eq 5 ]];then
-      echo "ok let's upload"
+      echo "ok let's upload";
     fi
   - ls -l
   # - export
