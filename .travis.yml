@@ -13,28 +13,11 @@ matrix:
     dist: trusty
     python: 3.7
     env: pythonv=3.7
-    # android:
-    #   components:
-    #     - tools
-    #     - platform-tools
-    #     - build-tools-28.0.3
-    #     - android-28
-    #   licenses:
-    #     - 'android-sdk-preview-license-.+'
-    #     - 'android-sdk-license-.+'
-    #     - 'google-gdk-license-.+'
-    addons:
-      apt:
-        sources:
-          - deadsnakes # source required so it finds the package definition below
-        packages:
-          - python3.7
-          - python3-pip
 
 before_install:
   # - sudo apt-get update
   # - sudo apt purge python2.7-minimal
-  - sudo apt-get install python3-pip python3-setuptools
+  # - sudo apt-get install python3-pip python3-setuptools
   # - pip3 install --upgrade pip
 
 install:
@@ -51,7 +34,6 @@ install:
   - python --version
   # - python3 -m ensurepip --upgrade
   # - pip3 -V
-  - pip -V
   - export
 
 script:
