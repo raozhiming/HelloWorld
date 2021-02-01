@@ -3,27 +3,40 @@ language: c
 matrix:
   include:
     - sudo: required
-      env: BUILD_TYPE=Release RUN_TEST=ON DEPLOY=TRUE
+      env: TYPE=TEST RUN_TEST=ON DEPLOY=TRUE
+      if: NOT tag IS present OR tag !~ /^(daily)/
+
+    - sudo: required
+      env: TYPE=DAILY DEPLOY=TRUE
       if: NOT tag IS present OR tag !~ /^(daily)/
 
 script:
   - echo "script"
-  - tar -czf test-$(date +'%Y%m%d%H%M%S').tar.gz test
+  - if [[ "$TYPE" == "TEST" ]]; then
+      tar -czf test-$(date +'%Y%m%d%H%M%S').tar.gz test;
+    else
+      tar -czf daily-$(date +'%Y%m%d%H%M%S').tar.gz test;
+    fi
   # - ret=`.ci_scripts/checkCommit.sh`
   # - echo "ret is" $ret
   # - if [[ "$TRAVIS_EVENT_TYPE" == "cron" && "$TRAVIS_BRANCH" == "master" && "$DEPLOY" != "" ]]; then
-  - if [[ "$TRAVIS_BRANCH" == "deploy" && "$DEPLOY" != "" ]]; then
-      .ci_scripts/checkCommit.sh;
-      ret=$?;
-      echo "ret:"$ret;
-      if [[ "$ret" -ne 1 ]]; then
-        echo "no commit, do not upload apk!";
-        DEPLOY="";
-      fi;
-    else
-      DEPLOY="";
+  # - if [[ "$TRAVIS_BRANCH" == "deploy" && "$DEPLOY" != "" ]]; then
+  #     .ci_scripts/checkCommit.sh;
+  #     ret=$?;
+  #     echo "ret:"$ret;
+  #     if [[ "$ret" -ne 1 ]]; then
+  #       echo "no commit, do not upload apk!";
+  #       DEPLOY="";
+  #     fi;
+  #   else
+  #     DEPLOY="";
+  #   fi
+  - export WEEK_DAY=$(date +%w)
+  - if [[ $WEEK_DAY -eq 1 || $WEEK_DAY -eq 5 ]];then
+      echo "ok let's upload"
     fi
-  - export
+  - ls -l
+  # - export
 
 before_deploy:
       # Set up git user name and tag this commit
@@ -37,7 +50,9 @@ deploy:
   provider: releases
   api_key: $GIT_TOKEN
   file_glob: true
-  file: test*.tar.gz
+  file:
+    - test*.tar.gz
+    - daily*.tar.gz
   skip_cleanup: true
   prerelease: true
   on:
