@@ -26,15 +26,17 @@ install:
   # - python3 --version
   # - pip3 install --upgrade pip
   # - ls -l /opt/python/
-  - ls -l /usr/bin/p*
-  - sudo rm /usr/bin/python
-  - sudo ln -s /usr/bin/python3.7 /usr/bin/python
-  - sudo rm /usr/bin/python3
-  - sudo ln -s /usr/bin/python3.7 /usr/bin/python3
-  - python --version
+  #- ls -l /usr/bin/p*
+  #- sudo rm /usr/bin/python
+  #- sudo ln -s /usr/bin/python3.7 /usr/bin/python
+  #- sudo rm /usr/bin/python3
+  #- sudo ln -s /usr/bin/python3.7 /usr/bin/python3
+  #- python --version
   # - python3 -m ensurepip --upgrade
   # - pip3 -V
   - export
+  - WEEK_DAY=$(date +%w)
+  - echo $WEEK_DAY
 
 script:
   - echo "script"
